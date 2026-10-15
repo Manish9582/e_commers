@@ -8,12 +8,18 @@ import {
   FaTractor,
   MdVerified,
   BsSpeedometer2,
+  FaFire,
+  IoIosTimer,
 } from "@/constants/icons";
 
 import LinkButton from "@/components/common/LinkButton";
 import SellComponent from "@/components/customer/SellComponent";
 import TopSellCompnent from "@/components/customer/TopSellCompnent";
 import ItemCateCompnent from "@/components/customer/ItemCateCompnent";
+import VegCardComponent from "@/components/customer/VegCardComponent";
+import Card from "@/components/common/Card";
+import ShopsComponent from "@/components/customer/ShopsComponent";
+import FeedComponent from "@/components/customer/FeedComponent";
 
 const Home = () => {
   const featuresData = [
@@ -51,7 +57,7 @@ const Home = () => {
                   <HiOutlineSparkles /> 30-Min Express Slot Open
                 </span>
               </div>
-              <div className="text-5xl max-w-4xl border border-red-50">
+              <div className="text-5xl max-w-4xl">
                 Freshest Harvest Delivered from Mandi to Your Kitchen in{" "}
                 <span className="underline font-semibold">30 Mins</span>
               </div>
@@ -106,9 +112,42 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <div>
-        <ItemCateCompnent />
+      <ItemCateCompnent />
+      <VegCardComponent />
+
+      <div className="bg-[var(--color-accent-orange)] mt-8 mb-4 text-white rounded-xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md mb-8">
+        <div className="space-y-2 text-center md:text-left">
+          <div className="inline-flex items-center gap-2 bg-white/20 0 px-3 py-1 rounded-full font-label-badge text-label-badge text-tertiary-fixed">
+            <FaFire />
+            <span className="text-sm font-semibold">
+              MORNING MANDI AUCTION DEALS
+            </span>
+          </div>
+          <h2 className="text-4xl font-semibold">Subah Ki Taaza Mandi Deals</h2>
+          <p className="font-body-md text-body-md text-tertiary-fixed-dim">
+            Harvested at dawn, priced at farm gate wholesale rates. Refreshes
+            every 4 hours.
+          </p>
+        </div>
+        <div className="flex items-center gap-2 bg-surface-container-lowest/15 backdrop-blur-md px-5 py-3 rounded-2xl">
+          <IoIosTimer className="text-2xl font-bold" />
+          <div className="flex items-center gap-2 font-semibold text-2xl">
+            <span id="hours-box">02</span>
+            <span className="opacity-70">:</span>
+            <span id="minutes-box">44</span>
+            <span className="opacity-70">:</span>
+            <span id="seconds-box">18</span>
+          </div>
+          <span className="font-label-caption text-label-caption text-tertiary-fixed ml-1">
+            Left to order
+          </span>
+        </div>
       </div>
+
+      <Card />
+      <ShopsComponent />
+
+      <FeedComponent />
     </div>
   );
 };

@@ -41,8 +41,8 @@ const LEGAL_LINKS = [
 
 const Footer = () => {
   return (
-    <footer className="max-w-8xl mx-auto px-4 lg:px-12 py-6 md:py-8">
-      <div className=" mx-auto px-gutter grid grid-cols-1 md:grid-cols-4 gap-space-xl mb-space-xl">
+    <footer className="max-w-8xl bg-[var(--color-primary-light)]/5 mx-auto px-4 lg:px-12 py-6 md:py-8">
+      <div className="gap-3 grid grid-cols-1 md:grid-cols-4 gap-space-xl mb-space-xl">
         <div>
           <div className="flex items-center gap-space-sm mb-space-md">
             <Image

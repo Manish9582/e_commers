@@ -1,22 +1,22 @@
-export { IoLocationOutline, IoPersonOutline } from "react-icons/io5";
+export { IoLocationOutline, IoPersonOutline, IoStar } from "react-icons/io5";
 
 export { GoSearch } from "react-icons/go";
 
-export { IoIosArrowDown } from "react-icons/io";
+export { IoIosArrowDown, IoIosTimer } from "react-icons/io";
 
-export { RiHeartFill } from "react-icons/ri";
+export { RiHeartFill, RiKnifeLine } from "react-icons/ri";
 
 export { HiOutlineHeart, HiOutlineSparkles } from "react-icons/hi";
 
 export { LuBaggageClaim, LuLogOut, LuLeaf } from "react-icons/lu";
 
-export { BsHandbag, BsSpeedometer2 } from "react-icons/bs";
+export { BsHandbag, BsSpeedometer2, BsShopWindow } from "react-icons/bs";
 
 export { ImSpoonKnife } from "react-icons/im";
 
-export { FaTractor } from "react-icons/fa";
+export { FaTractor, FaFire } from "react-icons/fa";
 
 export { MdVerified } from "react-icons/md";
-
-
 export { PiSunHorizonFill } from "react-icons/pi";
+export { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+export { HiAdjustmentsHorizontal } from "react-icons/hi2";

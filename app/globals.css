@@ -1,4 +1,7 @@
 @import "tailwindcss";
+body{
+  background: #FAFFFC;
+}
 
 :root {
   /* Primary Brand Greens */
@@ -37,4 +40,38 @@
   --color-text-inverse: #ffffff;
 }
 
+@theme inline {
+  /* Primary Brand Greens */
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-primary-light: var(--color-primary-light);
+  --color-primary-container: var(--color-primary-container);
+  --color-on-primary-container: var(--color-on-primary-container);
 
+  /* Accent & Status */
+  --color-accent-orange: var(--color-accent-orange);
+  --color-accent-orange-light: var(--color-accent-orange-light);
+  --color-error: var(--color-error);
+  --color-error-light: var(--color-error-light);
+  --color-success: var(--color-success);
+  --color-info: var(--color-info);
+
+  /* Surfaces */
+  --color-surface-base: var(--color-surface-base);
+  --color-surface-low: var(--color-surface-low);
+  --color-surface-container: var(--color-surface-container);
+  --color-surface-dim: var(--color-surface-dim);
+
+  /* Borders */
+  --color-border: var(--color-border);
+  --color-border-subtle: var(--color-border-subtle);
+  --color-border-card: var(--color-border-card);
+
+  /* Typography & Neutrals */
+  --color-text-main: var(--color-text-main);
+  --color-text-body: var(--color-text-body);
+  --color-text-muted: var(--color-text-muted);
+  --color-text-light: var(--color-text-light);
+  --color-text-inverse: var(--color-text-inverse);
+}
