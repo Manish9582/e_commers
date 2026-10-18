@@ -1,10 +1,15 @@
+"use client";
 import Image from "next/image";
 import FunButton from "./FunButton";
 import { AddToCartMehtod } from "@/constants/method";
+import Link from "next/link";
 
 const Card = () => {
   return (
-    <div className="rounded-xl shadow p-4 flex flex-col justify-between hover:shadow-md transition-shadow">
+    <Link
+      href={`/product/category?type=${"vegitable"}&subtype=${"whole"}&slug=${"root-vegetables"}`}
+      className="rounded-xl shadow p-4 flex flex-col justify-between hover:shadow-md transition-shadow"
+    >
       <div>
         <div className="relative h-44 rounded-xl overflow-hidden mb-3">
           <Image
@@ -46,7 +51,7 @@ const Card = () => {
           style="px-3 py-1 rounded-md bg-[var(--color-primary-hover)] text-white hover:bg-primary flex items-center justify-center transition-colors"
         />
       </div>
-    </div>
+    </Link>
   );
 };
 

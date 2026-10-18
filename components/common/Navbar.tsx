@@ -7,6 +7,7 @@ import {
   HiOutlineHeart,
   LuBaggageClaim,
 } from "@/constants/icons";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
@@ -52,28 +53,28 @@ const Navbar = () => {
             className="flex gap-5"
             data-active-classes="bg-primary-container text-on-primary-container font-bold"
           >
-            <a
+            <Link
               aria-current="page"
               className="px-space-md py-space-sm rounded-xl transition-colors bg-primary-container text-on-primary-container font-bold"
               data-path="home"
-              href="#"
+              href="/"
             >
               Home
-            </a>
-            <a
+            </Link>
+            <Link
               className="px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors text-label-md"
               data-path="shop"
-              href="#"
+              href="/product"
             >
-              Shop
-            </a>
-            <a
+              Products
+            </Link>
+            <Link
               className="px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors text-label-md"
               data-path="deals"
-              href="#"
+              href="/shop"
             >
-              Deals
-            </a>
+              Shop
+            </Link>
           </nav>
           <div className="flex items-center gap-4">
             <a
@@ -104,30 +105,13 @@ const Navbar = () => {
               </button>
               <div className="absolute right-0 top-full pt-2 w-56 hidden group-hover:block">
                 <div className="bg-surface-container-lowest p-3 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] py-space-sm flex flex-col">
-                  <div className="px-space-md py-space-xs border-b border-surface-variant mb-space-xs">
-                    <p className="text-label-md text-on-surface">
-                      Alex Johnson
-                    </p>
-                    <p className="text-label-sm text-outline">
-                      alex@example.com
-                    </p>
-                  </div>
-                  <a
-                    className="px-space-md mt-1 py-space-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors flex items-center gap-space-sm"
-                    data-path="my-orders"
-                    href="#"
+                  <Link
+                    className="px-space-md mt-1 py-space-sm text-body-sm text-error hover:bg-error-container hover:text-on-error-container transition-colors flex items-center gap-space-sm"
+                    data-path="logout"
+                    href="/profile"
                   >
-                    <LuBaggageClaim />
-                    My Orders
-                  </a>
-                  <a
-                    className="px-space-md py-space-sm text-body-sm text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors flex items-center gap-space-sm"
-                    data-path="addresses"
-                    href="#"
-                  >
-                    <IoLocationOutline />
-                    Addresses
-                  </a>
+                    Profile
+                  </Link>
                   <div className="border-t border-surface-variant my-space-xs"></div>
                   <a
                     className="px-space-md mt-1 py-space-sm text-body-sm text-error hover:bg-error-container hover:text-on-error-container transition-colors flex items-center gap-space-sm"
