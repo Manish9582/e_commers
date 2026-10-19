@@ -14,10 +14,10 @@ const Navbar = () => {
     <header className="sticky z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
       <div className="h-20 px-8 mx-auto px-gutter grid grid-cols-12 items-center">
         <div className="flex items-center gap-5 col-start-1 col-end-4">
-          <a
+          <Link
             className="flex items-center gap-space-sm"
             data-path="home"
-            href="#"
+            href="/"
           >
             <img
               alt="FreshMart Logo"
@@ -27,7 +27,7 @@ const Navbar = () => {
             <span className="font-headline-md text-on-surface tracking-tight">
               FreshMart
             </span>
-          </a>
+          </Link>
           <div className="hidden lg:flex items-center gap-space-sm bg-surface-container-low px-space-md py-space-sm rounded-xl text-on-surface-variant">
             <IoLocationOutline className="text-primary text-[20px]" />
             <span className="text-body-sm">
@@ -77,26 +77,25 @@ const Navbar = () => {
             </Link>
           </nav>
           <div className="flex items-center gap-4">
-            <a
+            <Link
               className="relative p-space-sm rounded-full hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors"
               data-path="wishlist"
-              href="#"
-              title="Wishlist"
+              href="/like"
             >
               <HiOutlineHeart className="text-xl" />
               <span className="absolute top-[-13px] left-[13px] bg-tertiary text-on-tertiary text-label-sm w-4 h-4 rounded-full flex items-center justify-center">
                 3
               </span>
-            </a>
-            <button
+            </Link>
+            <Link
               className="relative p-space-sm rounded-full hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors"
-              title="Cart"
+              href={"/order"}
             >
               <LuBaggageClaim className="text-xl" />
               <span className="absolute top-[-10px] left-[16px] bg-primary text-on-primary text-label-sm w-4 h-4 rounded-full flex items-center justify-center">
                 5
               </span>
-            </button>
+            </Link>
             <div className="relative group ml-space-xs">
               <button className="flex items-center gap-space-xs p-1 rounded-full hover:bg-surface-container-high transition-colors">
                 <div className="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center">
