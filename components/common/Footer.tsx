@@ -22,7 +22,7 @@ const CATEGORY_LINKS = [
 
 const QUICK_LINKS = [
   { label: "About Us", href: "/about" },
-  { label: "Partner Hubs", href: "/hubs" },
+  { label: "Partner Hubs", href: "/shopkeeper/login" },
   { label: "My Orders", href: "/order" },
   { label: "Track Live Order", href: "/order-status" },
   { label: "Support & FAQs", href: "/support" },
