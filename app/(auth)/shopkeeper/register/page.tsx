@@ -1,6 +1,15 @@
 "use client";
 
-import { checkItNumber, CheckItString, CheckLength } from "@/constants/method";
+import FunButton from "@/components/common/FunButton";
+import {
+  CheckEmail,
+  checkItNumber,
+  CheckItString,
+  CheckLength,
+  PasswordValidate,
+} from "@/constants/regex";
+import { useAppDispatch } from "@/redux/store";
+import { SignShopkepeerThunks } from "@/redux/thunks/customer";
 import { AcceptShopData } from "@/types/shop/type";
 import React, { useState } from "react";
 import {
@@ -15,6 +24,7 @@ import {
   MdVisibilityOff,
   MdErrorOutline,
 } from "react-icons/md";
+import { toast } from "react-toastify";
 
 export default function ShopKeeperSign() {
   const [showPassword, setShowPassword] = useState(false);
@@ -39,46 +49,83 @@ export default function ShopKeeperSign() {
     state: "",
     pincode: "",
     password: "",
+    check: false,
   });
 
   function HelperFunGetShopData(
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e:
+      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      | React.MouseEvent<HTMLInputElement>,
   ) {
-    const { value, name } = e.target;
-    const fileds: string[] = [
-      "name",
-      "email",
-      "shopName",
-      "shopAdress",
-      "city",
-      "state",
-      "password",
-    ];
-    if (fileds.includes(name)) {
-      const result = CheckItString(value, name);
+    const target = e.currentTarget;
+    const { value, name: InputName, type } = target;
+    const fileds: string[] = ["name", "shopName", "city", "state", "password"];
+    if (fileds.includes(InputName)) {
+      const result = CheckItString(value, InputName);
       setshopDataError((prev) => ({
         ...prev,
-        [name]: result.error || "",
+        [InputName]: result.error || "",
       }));
     }
 
-    if (name === "pincode" || name === "phone") {
-      const minNum = name === "phone" ? 10 : 6;
+    if (InputName === "pincode" || InputName === "phone") {
+      const minNum = InputName === "phone" ? 10 : 6;
 
-      const lengthResult = CheckLength(value, name, minNum, minNum);
-      const numberResult = checkItNumber(value, name);
+      const lengthResult = CheckLength(value, InputName, minNum, minNum);
+      const numberResult = checkItNumber(value, InputName);
       const error = numberResult.error || lengthResult.error;
       setshopDataError((prev) => ({
         ...prev,
-        [name]: error || "",
+        [InputName]: error || "",
       }));
     }
 
+    if (InputName === "email") {
+      const result = CheckEmail(value, InputName);
+      setshopDataError((prev) => ({
+        ...prev,
+        [InputName]: result.error || "",
+      }));
+    }
+
+    if (InputName === "password") {
+      const result = PasswordValidate(value, InputName);
+      setshopDataError((prev) => ({
+        ...prev,
+        [InputName]: result?.error || "",
+      }));
+    }
     setshopData((prev) => ({
       ...prev,
-      [name]: value,
+      [InputName]: type == "checkbox" ? !shopData.check : value,
     }));
   }
+
+  const dispatch = useAppDispatch();
+  function SubmitData() {
+    if (
+      !shopData.name?.trim() ||
+      !shopData.email?.trim() ||
+      !String(shopData.phone ?? " ").trim() ||
+      !shopData.shopName?.trim() ||
+      !shopData.shopAdress?.trim() ||
+      !shopData.city?.trim() ||
+      !shopData.state?.trim() ||
+      !String(shopData.pincode ?? "").trim() ||
+      !shopData.password?.trim()
+    ) {
+      toast.warn("All fields are required!");
+      return;
+    }
+
+    if (!shopData.check) {
+      toast.warn("Please accept the terms and conditions!");
+      return;
+    }
+
+    dispatch(SignShopkepeerThunks(shopData)).unwrap();
+  }
+
   return (
     <div className="min-h-screen py-10 px-4 sm:px-6 flex items-center justify-center">
       <div
@@ -320,86 +367,92 @@ export default function ShopKeeperSign() {
             </div>
 
             <div className="grid grid-cols-3 gap-3">
-              <div className="space-y-1">
-                <label
-                  className="block text-xs font-bold"
-                  style={{ color: "var(--color-text-main)" }}
-                >
-                  City
-                </label>
-                <input
-                  type="text"
-                  value={shopData.city}
-                  onChange={HelperFunGetShopData}
-                  name="city"
-                  className="w-full px-3 py-2 rounded-xl text-xs sm:text-sm border focus:outline-none shadow-2xs"
-                  style={{
-                    backgroundColor: "var(--color-surface-container)",
-                    borderColor: "var(--color-border)",
-                    color: "var(--color-text-main)",
-                  }}
-                />
-              </div>
-              {shopDataError.city && (
-                <div className="mt-1.5 text-red-600 text-xs font-bold flex items-center gap-1.5">
-                  <MdErrorOutline className="text-sm shrink-0" />
-                  <span>{shopDataError?.city}</span>
+              <div>
+                <div className="space-y-1">
+                  <label
+                    className="block text-xs font-bold"
+                    style={{ color: "var(--color-text-main)" }}
+                  >
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    value={shopData.city}
+                    onChange={HelperFunGetShopData}
+                    name="city"
+                    className="w-full px-3 py-2 rounded-xl text-xs sm:text-sm border focus:outline-none shadow-2xs"
+                    style={{
+                      backgroundColor: "var(--color-surface-container)",
+                      borderColor: "var(--color-border)",
+                      color: "var(--color-text-main)",
+                    }}
+                  />
                 </div>
-              )}
+                {shopDataError.city && (
+                  <div className="mt-1.5 text-red-600 text-xs font-bold flex items-center gap-1.5">
+                    <MdErrorOutline className="text-sm shrink-0" />
+                    <span>{shopDataError?.city}</span>
+                  </div>
+                )}
+              </div>
 
-              <div className="space-y-1">
-                <label
-                  className="block text-xs font-bold"
-                  style={{ color: "var(--color-text-main)" }}
-                >
-                  State
-                </label>
-                <input
-                  type="text"
-                  value={shopData.state}
-                  onChange={HelperFunGetShopData}
-                  name="state"
-                  className="w-full px-3 py-2 rounded-xl text-xs sm:text-sm border focus:outline-none shadow-2xs"
-                  style={{
-                    backgroundColor: "var(--color-surface-container)",
-                    borderColor: "var(--color-border)",
-                    color: "var(--color-text-main)",
-                  }}
-                />
-              </div>
-              {shopDataError.state && (
-                <div className="mt-1.5 text-red-600 text-xs font-bold flex items-center gap-1.5">
-                  <MdErrorOutline className="text-sm shrink-0" />
-                  <span>{shopDataError?.state}</span>
+              <div>
+                <div className="space-y-1">
+                  <label
+                    className="block text-xs font-bold"
+                    style={{ color: "var(--color-text-main)" }}
+                  >
+                    State
+                  </label>
+                  <input
+                    type="text"
+                    value={shopData.state}
+                    onChange={HelperFunGetShopData}
+                    name="state"
+                    className="w-full px-3 py-2 rounded-xl text-xs sm:text-sm border focus:outline-none shadow-2xs"
+                    style={{
+                      backgroundColor: "var(--color-surface-container)",
+                      borderColor: "var(--color-border)",
+                      color: "var(--color-text-main)",
+                    }}
+                  />
                 </div>
-              )}
+                {shopDataError.state && (
+                  <div className="mt-1.5 text-red-600 text-xs font-bold flex items-center gap-1.5">
+                    <MdErrorOutline className="text-sm shrink-0" />
+                    <span>{shopDataError?.state}</span>
+                  </div>
+                )}
+              </div>
 
-              <div className="space-y-1">
-                <label
-                  className="block text-xs font-bold"
-                  style={{ color: "var(--color-text-main)" }}
-                >
-                  Pincode
-                </label>
-                <input
-                  type="text"
-                  value={shopData.pincode}
-                  onChange={HelperFunGetShopData}
-                  name="pincode"
-                  className="w-full px-3 py-2 rounded-xl text-xs sm:text-sm border focus:outline-none shadow-2xs"
-                  style={{
-                    backgroundColor: "var(--color-surface-container)",
-                    borderColor: "var(--color-border)",
-                    color: "var(--color-text-main)",
-                  }}
-                />
-              </div>
-              {shopDataError.pincode && (
-                <div className="mt-1.5 text-red-600 text-xs font-bold flex items-center gap-1.5">
-                  <MdErrorOutline className="text-sm shrink-0" />
-                  <span>{shopDataError?.pincode}</span>
+              <div>
+                <div className="space-y-1">
+                  <label
+                    className="block text-xs font-bold"
+                    style={{ color: "var(--color-text-main)" }}
+                  >
+                    Pincode
+                  </label>
+                  <input
+                    type="text"
+                    value={shopData.pincode}
+                    onChange={HelperFunGetShopData}
+                    name="pincode"
+                    className="w-full px-3 py-2 rounded-xl text-xs sm:text-sm border focus:outline-none shadow-2xs"
+                    style={{
+                      backgroundColor: "var(--color-surface-container)",
+                      borderColor: "var(--color-border)",
+                      color: "var(--color-text-main)",
+                    }}
+                  />
                 </div>
-              )}
+                {shopDataError.pincode && (
+                  <div className="mt-1.5 text-red-600 text-xs font-bold flex items-center gap-1.5">
+                    <MdErrorOutline className="text-sm shrink-0" />
+                    <span>{shopDataError?.pincode}</span>
+                  </div>
+                )}
+              </div>
             </div>
 
             <div className="space-y-1">
@@ -415,7 +468,7 @@ export default function ShopKeeperSign() {
                   type={showPassword ? "text" : "password"}
                   value={shopData.password}
                   onChange={HelperFunGetShopData}
-                  name="passwrod"
+                  name="password"
                   placeholder="••••••••••••"
                   className="w-full pl-10 pr-10 py-2.5 rounded-xl text-xs sm:text-sm border focus:outline-none transition-all shadow-2xs"
                   style={{
@@ -447,8 +500,10 @@ export default function ShopKeeperSign() {
             <div className="flex items-center gap-2 pt-1">
               <input
                 type="checkbox"
-                defaultChecked
-                id="agreedToTerms"
+                checked={shopData.check}
+                onClick={HelperFunGetShopData}
+                readOnly
+                name="check"
                 className="w-4 h-4 rounded cursor-pointer accent-[var(--color-primary)]"
               />
               <label
@@ -461,18 +516,11 @@ export default function ShopKeeperSign() {
               </label>
             </div>
 
-            <button
-              type="button"
-              onClick={() => alert("Registered Partner Account Successfully!")}
-              className="py-3 w-full rounded-xl font-bold text-xs shadow-md flex items-center justify-center gap-1.5 cursor-pointer transition-all hover:opacity-90"
-              style={{
-                backgroundColor: "var(--color-primary)",
-                color: "var(--color-text-inverse)",
-              }}
-            >
-              <span>Complete Sign Up</span>
-              <MdCheckCircle className="text-base" />
-            </button>
+            <FunButton
+              title="Complete Sign Up"
+              fun={SubmitData}
+              style="py-3 w-full bg-[var(--color-primary)] text-[var(--color-text-inverse)] rounded-xl font-bold text-xs shadow-md flex items-center justify-center gap-1.5 cursor-pointer transition-all hover:opacity-90"
+            />
           </div>
         </div>
       </div>

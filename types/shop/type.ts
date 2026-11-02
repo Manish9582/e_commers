@@ -8,4 +8,10 @@ export type AcceptShopData = {
   state: string;
   pincode: number | "";
   password: string;
+  check?: boolean;
+};
+
+export type responseData = {
+  status: boolean;
+  message: string;
 };
